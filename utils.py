@@ -3,6 +3,7 @@ import os
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 
@@ -65,6 +66,21 @@ def create_embeddings(text):
     embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_APIKEY)
     
     return embeddings.embed_query(text)
+
+def create_transcript(mp3_path):
+
+    client = OpenAI(api_key=OPENAI_APIKEY)
+
+
+    audio_file= open(mp3_path, "rb")
+    transcript = client.audio.transcriptions.create(
+    model="whisper-1", 
+    file=audio_file,
+    response_format="text",
+    
+    )
+
+    return transcript
 
 def llm_predict(prompt):
     llm = ChatOpenAI(openai_api_key=OPENAI_APIKEY,
