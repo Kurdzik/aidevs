@@ -5,6 +5,7 @@ build_push:
 run:
 	docker run -p 40074:5000 -e OPENAI_APIKEY="" kurdzik/own_api
 
+	
 debug:
 	docker build -t kurdzik/own_api .
 	docker run -p 40074:5000 -e OPENAI_APIKEY="" kurdzik/own_api
